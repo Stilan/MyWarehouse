@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "product")
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,13 +16,16 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private UUID id = UUID.randomUUID();
     @Column(nullable = false)
-    private int article;
+    private Integer article;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)
-    private int lastPurchasePrice;
+    private Integer lastPurchasePrice;
     @Column(nullable = false)
     private int lastSalePrice;
+    //    а зачем lastSalePrice ?
+    // Товар (Артикул, Наименование, Цена последней закупки, Цена последней продажи). Там поля по заданию
+
 }
