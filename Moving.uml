@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.example.mywarehouse.entity.documentation.Moving</OriginalElement>
+  <nodes>
+    <node x="0.0" y="327.5">com.example.mywarehouse.entity.Product.ProductBuilder</node>
+    <node x="489.99999999999994" y="0.0">com.example.mywarehouse.entity.Product</node>
+    <node x="400.84749999999997" y="942.0">com.example.mywarehouse.entity.documentation.Sale.SaleBuilder</node>
+    <node x="0.0" y="705.8358895705521">com.example.mywarehouse.entity.Stock.StockBuilder</node>
+    <node x="756.8475" y="649.0">com.example.mywarehouse.entity.documentation.Moving</node>
+    <node x="439.34749999999997" y="638.0">com.example.mywarehouse.entity.documentation.Sale</node>
+    <node x="1087.8474999999999" y="649.0">com.example.mywarehouse.entity.documentation.Entrance</node>
+    <node x="708.8475" y="953.0">com.example.mywarehouse.entity.documentation.Moving.MovingBuilder</node>
+    <node x="1034.8474999999999" y="953.0">com.example.mywarehouse.entity.documentation.Entrance.EntranceBuilder</node>
+    <node x="398.1474999999999" y="316.0">com.example.mywarehouse.entity.Stock</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.example.mywarehouse.entity.documentation.Sale" target="com.example.mywarehouse.entity.Stock" relationship="TO_ONE">
+      <point x="-52.75" y="-127.0" />
+      <point x="492.09749999999997" y="617.0" />
+      <point x="418.59749999999997" y="617.0" />
+      <point x="418.59749999999997" y="607.0" />
+      <point x="503.1474999999999" y="607.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.Stock" target="com.example.mywarehouse.entity.Product" relationship="TO_MANY">
+      <point x="-52.5" y="-105.0" />
+      <point x="450.6474999999999" y="295.0" />
+      <point x="582.1474999999999" y="295.0" />
+      <point x="582.1474999999999" y="275.0" />
+      <point x="595.0" y="275.0" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Moving" target="com.example.mywarehouse.entity.Product" relationship="TO_MANY">
+      <point x="-52.5" y="-116.0" />
+      <point x="809.3475" y="607.0" />
+      <point x="573.75" y="607.0" />
+      <point x="573.75" y="577.0" />
+      <point x="348.7724999999999" y="577.0" />
+      <point x="348.7724999999999" y="295.0" />
+      <point x="582.1474999999999" y="295.0" />
+      <point x="582.1474999999999" y="275.0" />
+      <point x="595.0" y="275.0" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Entrance.EntranceBuilder" target="com.example.mywarehouse.entity.documentation.Entrance" relationship="INNER_CLASS">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="116.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Entrance" target="com.example.mywarehouse.entity.Product" relationship="TO_MANY">
+      <point x="-52.5" y="-116.0" />
+      <point x="1140.3474999999999" y="597.0" />
+      <point x="797.0" y="597.0" />
+      <point x="797.0" y="295.0" />
+      <point x="582.1474999999999" y="295.0" />
+      <point x="582.1474999999999" y="275.0" />
+      <point x="595.0" y="275.0" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Entrance" target="com.example.mywarehouse.entity.Stock" relationship="DEPENDENCY">
+      <point x="52.5" y="-116.0" />
+      <point x="1245.3474999999999" y="617.0" />
+      <point x="1208.8474999999999" y="617.0" />
+      <point x="1208.8474999999999" y="567.0" />
+      <point x="966.375" y="567.0" />
+      <point x="966.375" y="547.0" />
+      <point x="573.1474999999999" y="547.0" />
+      <point x="70.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.Stock" target="com.example.mywarehouse.entity.Product" relationship="DEPENDENCY">
+      <point x="52.5" y="-105.0" />
+      <point x="555.6474999999999" y="285.0" />
+      <point x="966.3749999999999" y="285.0" />
+      <point x="966.375" y="275.0" />
+      <point x="665.0" y="275.0" />
+      <point x="70.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Moving" target="com.example.mywarehouse.entity.Stock" relationship="DEPENDENCY">
+      <point x="52.5" y="-116.0" />
+      <point x="914.3475" y="617.0" />
+      <point x="971.625" y="617.0" />
+      <point x="971.625" y="577.0" />
+      <point x="966.375" y="577.0" />
+      <point x="966.375" y="547.0" />
+      <point x="573.1474999999999" y="547.0" />
+      <point x="70.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Moving" target="com.example.mywarehouse.entity.Product" relationship="DEPENDENCY">
+      <point x="52.5" y="-116.0" />
+      <point x="914.3475" y="617.0" />
+      <point x="971.625" y="617.0" />
+      <point x="971.625" y="587.0" />
+      <point x="976.875" y="587.0" />
+      <point x="976.875" y="285.0" />
+      <point x="966.375" y="285.0" />
+      <point x="966.375" y="275.0" />
+      <point x="665.0" y="275.0" />
+      <point x="70.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Sale" target="com.example.mywarehouse.entity.Product" relationship="DEPENDENCY">
+      <point x="52.75" y="-127.0" />
+      <point x="597.5975" y="617.0" />
+      <point x="808.0" y="617.0" />
+      <point x="808.0" y="285.0" />
+      <point x="966.375" y="285.0" />
+      <point x="966.375" y="275.0" />
+      <point x="665.0" y="275.0" />
+      <point x="70.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.Stock.StockBuilder" target="com.example.mywarehouse.entity.Stock" relationship="INNER_CLASS">
+      <point x="0.0" y="-71.5" />
+      <point x="131.0" y="597.0" />
+      <point x="433.1474999999999" y="597.0" />
+      <point x="-70.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.Product.ProductBuilder" target="com.example.mywarehouse.entity.Product" relationship="INNER_CLASS">
+      <point x="0.0" y="-93.5" />
+      <point x="154.0" y="285.0" />
+      <point x="525.0" y="285.0" />
+      <point x="-70.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Entrance" target="com.example.mywarehouse.entity.Stock" relationship="TO_ONE">
+      <point x="-52.5" y="-116.0" />
+      <point x="1140.3474999999999" y="597.0" />
+      <point x="797.0" y="597.0" />
+      <point x="797.0" y="557.0" />
+      <point x="503.1474999999999" y="557.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Sale" target="com.example.mywarehouse.entity.Product" relationship="TO_MANY">
+      <point x="-52.75" y="-127.0" />
+      <point x="492.09749999999997" y="617.0" />
+      <point x="418.59749999999997" y="617.0" />
+      <point x="418.59749999999997" y="587.0" />
+      <point x="318.49999999999994" y="587.0" />
+      <point x="318.49999999999994" y="295.0" />
+      <point x="582.1475" y="295.0" />
+      <point x="582.1474999999999" y="275.0" />
+      <point x="595.0" y="275.0" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Sale" target="com.example.mywarehouse.entity.Stock" relationship="DEPENDENCY">
+      <point x="52.75" y="-127.0" />
+      <point x="597.5975" y="617.0" />
+      <point x="808.0" y="617.0" />
+      <point x="808.0" y="587.0" />
+      <point x="966.375" y="587.0" />
+      <point x="966.375" y="547.0" />
+      <point x="573.1474999999999" y="547.0" />
+      <point x="70.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Moving" target="com.example.mywarehouse.entity.Stock" relationship="TO_ONE">
+      <point x="-52.5" y="-116.0" />
+      <point x="809.3475" y="607.0" />
+      <point x="573.75" y="607.0" />
+      <point x="573.75" y="567.0" />
+      <point x="503.1474999999999" y="567.0" />
+      <point x="0.0" y="105.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Moving.MovingBuilder" target="com.example.mywarehouse.entity.documentation.Moving" relationship="INNER_CLASS">
+      <point x="0.0" y="-82.5" />
+      <point x="0.0" y="116.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Sale.SaleBuilder" target="com.example.mywarehouse.entity.documentation.Sale" relationship="INNER_CLASS">
+      <point x="0.0" y="-93.5" />
+      <point x="0.0" y="127.0" />
+    </edge>
+    <edge source="com.example.mywarehouse.entity.documentation.Entrance" target="com.example.mywarehouse.entity.Product" relationship="DEPENDENCY">
+      <point x="52.5" y="-116.0" />
+      <point x="1245.3474999999999" y="617.0" />
+      <point x="1208.8474999999999" y="617.0" />
+      <point x="1208.8474999999999" y="285.0" />
+      <point x="966.375" y="285.0" />
+      <point x="966.375" y="275.0" />
+      <point x="665.0" y="275.0" />
+      <point x="70.0" y="127.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5674499564838991" showDependencies="true" x="675.5" y="564.5" />
+  <SelectedNodes>
+    <node>com.example.mywarehouse.entity.Stock.StockBuilder</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

@@ -14,6 +14,10 @@ public class Main {
         String joined = cities.stream().sorted().collect(Collectors.joining(", "));
 
         System.out.println(joined);
+
+
+
+
     }
 
 
