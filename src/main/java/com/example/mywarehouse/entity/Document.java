@@ -6,30 +6,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "document")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id = UUID.randomUUID();
     @Column(nullable = false)
-    private Integer article;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    private Integer lastPurchasePrice;
-    @Column(nullable = false)
-    private Integer lastSalePrice;
-    private Integer remainingGoods;
-    @Column(nullable = false)
-    private boolean isDeleted = Boolean.FALSE;
+    private Integer documentNumber;
+    private UUID stockId;
+    private UUID loadingWarehouseId;
 
+    private Type type;
 
+    public enum Type {
+        ENTRANCE,
+        MOVING,
+        SALE
+    }
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Product> products;
 }
