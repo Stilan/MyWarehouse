@@ -36,6 +36,10 @@ public class DocumentController {
        return new ResponseEntity<>(documentService.getAllProduct(str), HttpStatus.OK);
     }
 
+    @GetMapping("/allLeftoversProduct")
+    public ResponseEntity<List<LeftoversProductDto>> getAllLeftoversProduct(@RequestParam("name") String str) {
+        return new ResponseEntity<>(documentService.getAllLeftoversProduct(str), HttpStatus.OK);
+    }
 
 
 }

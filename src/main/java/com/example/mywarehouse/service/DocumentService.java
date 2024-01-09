@@ -3,17 +3,21 @@ package com.example.mywarehouse.service;
 import com.example.mywarehouse.dto.*;
 import com.example.mywarehouse.entity.Document;
 import com.example.mywarehouse.entity.Product;
+import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.mapper.EntranceMapper;
 import com.example.mywarehouse.mapper.MovingMapper;
 import com.example.mywarehouse.mapper.ProductMapper;
 import com.example.mywarehouse.mapper.SaleMapper;
 import com.example.mywarehouse.repository.DocumentRepository;
 import com.example.mywarehouse.repository.ProductRepository;
+import com.example.mywarehouse.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -24,6 +28,7 @@ public class DocumentService {
 
     private final DocumentRepository documentRepository;
     private final ProductRepository productRepository;
+    private final StockRepository stockRepository;
     private final EntranceMapper entranceMapper;
     private final MovingMapper movingMapper;
     private final SaleMapper saleMapper;
@@ -57,6 +62,13 @@ public class DocumentService {
            products = productRepository.findAll();
         }
         return products.stream().map(productMapper :: toDocDto).collect(Collectors.toList());
+    }
 
+    public List<LeftoversProductDto> getAllLeftoversProduct(String name) {
+        List<Stock> stockList = stockRepository.findAllByName(name);
+        List<Product> products = stockList.stream()
+                .flatMap(stock -> stock.getProducts().stream())
+                .collect(Collectors.toList());
+        return products.stream().map(productMapper :: toLeftoversProduct).collect(Collectors.toList());
     }
 }

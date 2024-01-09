@@ -1,5 +1,6 @@
 package com.example.mywarehouse.repository;
 
+import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,5 @@ public interface StockRepository extends JpaRepository<Stock, UUID> {
 
     Optional<Stock> findByIdAndIsDeletedFalse(UUID id);
 
+    List<Stock> findAllByName(String name);
 }

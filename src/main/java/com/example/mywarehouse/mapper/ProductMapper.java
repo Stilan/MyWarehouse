@@ -1,5 +1,6 @@
 package com.example.mywarehouse.mapper;
 
+import com.example.mywarehouse.dto.LeftoversProductDto;
 import com.example.mywarehouse.dto.ProductDocDto;
 import com.example.mywarehouse.dto.ProductDto;
 import com.example.mywarehouse.entity.Product;
@@ -12,4 +13,6 @@ public interface ProductMapper {
     Product toEntity(ProductDto productDto);
 
     ProductDocDto toDocDto(Product product);
+
+    LeftoversProductDto toLeftoversProduct(Product product);
 }
