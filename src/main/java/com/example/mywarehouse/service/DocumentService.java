@@ -1,23 +1,18 @@
 package com.example.mywarehouse.service;
 
-import com.example.mywarehouse.dto.*;
-import com.example.mywarehouse.entity.Document;
+import com.example.mywarehouse.dto.EntranceProductDto;
+import com.example.mywarehouse.dto.LeftoversProductDto;
+import com.example.mywarehouse.dto.MovingProductDto;
+import com.example.mywarehouse.dto.ProductDocDto;
+import com.example.mywarehouse.dto.SaleProductDto;
 import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.entity.Stock;
-import com.example.mywarehouse.mapper.EntranceMapper;
-import com.example.mywarehouse.mapper.MovingMapper;
 import com.example.mywarehouse.mapper.ProductMapper;
-import com.example.mywarehouse.mapper.SaleMapper;
-import com.example.mywarehouse.repository.DocumentRepository;
-import com.example.mywarehouse.repository.ProductRepository;
-import com.example.mywarehouse.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -26,49 +21,39 @@ import java.util.stream.Collectors;
 @Transactional
 public class DocumentService {
 
-    private final DocumentRepository documentRepository;
-    private final ProductRepository productRepository;
-    private final StockRepository stockRepository;
-    private final EntranceMapper entranceMapper;
-    private final MovingMapper movingMapper;
-    private final SaleMapper saleMapper;
+    private final ProductService productService;
+    private final StockService stockService;
     private final ProductMapper productMapper;
 
-
-    public EntranceDto createDocumentEntrance(EntranceDto entranceDto) {
-        Document document = entranceMapper.toEntity(entranceDto);
-        document.setType(Document.Type.ENTRANCE);
-        Document savedEntrance = documentRepository.save(document);
-        return entranceMapper.toDto(savedEntrance);
+    public List<EntranceProductDto> getEntrance(List<EntranceProductDto> entranceDto) {
+        return entranceDto.stream()
+                .map(productService::createProduct)
+                .collect(Collectors.toList());
     }
 
-    public MovingDto createDocumentMoving(MovingDto movingDto) {
-        Document document = movingMapper.toEntity(movingDto);
-        document.setType(Document.Type.MOVING);
-        Document savedMoving = documentRepository.save(document);
-        return movingMapper.toDto(savedMoving);
+    public List<MovingProductDto> getMoving(UUID id, List<MovingProductDto> movingProductDtoList) {
+        return movingProductDtoList.stream()
+                .map(movingProductDto -> productService.moving(id, movingProductDto))
+                .collect(Collectors.toList());
     }
 
-    public SaleDto createDocumentSale(SaleDto saleDto) {
-        Document document = saleMapper.toEntity(saleDto);
-        document.setType(Document.Type.SALE);
-        Document savedSale = documentRepository.save(document);
-        return saleMapper.toDto(savedSale);
+    public List<SaleProductDto> getSale(UUID id, List<SaleProductDto> saleProductDtoList) {
+         return saleProductDtoList.stream()
+                  .map(saleProductDto -> productService.saleProduct(id, saleProductDto))
+                  .collect(Collectors.toList());
     }
 
     public List<ProductDocDto> getAllProduct(String name) {
-        List<Product> products = productRepository.findAllByName(name);
+        List<Product> products = productService.findAllByName(name);
         if (name.length() == 0){
-           products = productRepository.findAll();
+           products = productService.findAll();
         }
         return products.stream().map(productMapper :: toDocDto).collect(Collectors.toList());
     }
 
     public List<LeftoversProductDto> getAllLeftoversProduct(String name) {
-        List<Stock> stockList = stockRepository.findAllByName(name);
-        List<Product> products = stockList.stream()
-                .flatMap(stock -> stock.getProducts().stream())
-                .collect(Collectors.toList());
+        Stock stock = stockService.getStockOfName(name);
+        List<Product> products = productService.getAllProductOfStock(stock.getId());
         return products.stream().map(productMapper :: toLeftoversProduct).collect(Collectors.toList());
     }
 }

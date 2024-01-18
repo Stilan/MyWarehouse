@@ -1,12 +1,18 @@
 package com.example.mywarehouse.controller;
 
 import com.example.mywarehouse.dto.StockDto;
-import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
@@ -19,11 +25,12 @@ public class StockController {
 
     @PostMapping("/create")
     public ResponseEntity<StockDto> createStock(@RequestBody StockDto stockDto) {
-        return new ResponseEntity<>(stockService.createStock(stockDto), HttpStatus.OK);
+        StockDto createStockDto = stockService.createStock(stockDto);
+        return new ResponseEntity<>(createStockDto, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<StockDto> getTemplateById(@PathVariable  UUID id) {
+    public ResponseEntity<StockDto> getStockById(@PathVariable  UUID id) {
         StockDto stockDto = stockService.getStockById(id);
         return ResponseEntity.ok(stockDto);
     }
@@ -31,11 +38,13 @@ public class StockController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<StockDto> updateStock(@PathVariable UUID id, @RequestBody StockDto stockDto) {
-        return new ResponseEntity<>(stockService.updateStock(id, stockDto), HttpStatus.CREATED);
+        StockDto updateStockDto = stockService.updateStock(id, stockDto);
+        return new ResponseEntity<>(updateStockDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<StockDto> deleteStock(@PathVariable UUID id) {
-        return new ResponseEntity<>(stockService.deleteStock(id), HttpStatus.OK);
+        StockDto deleteStockDto = stockService.deleteStock(id);
+        return new ResponseEntity<>(deleteStockDto, HttpStatus.OK);
     }
 }

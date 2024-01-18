@@ -2,7 +2,6 @@ package com.example.mywarehouse.service;
 
 import com.example.mywarehouse.dto.StockDto;
 import com.example.mywarehouse.entity.Stock;
-import com.example.mywarehouse.exception.ResourceNotFoundException;
 import com.example.mywarehouse.mapper.StockMapper;
 import com.example.mywarehouse.repository.ProductRepository;
 import com.example.mywarehouse.repository.StockRepository;
@@ -24,7 +23,6 @@ public class StockService {
 
     public StockDto createStock(StockDto stockDto) {
         Stock stock = stockMapper.toEntity(stockDto);
-        productRepository.saveAll(stock.getProducts());
         Stock savedStock = stockRepository.save(stock);
         return stockMapper.toDto(savedStock);
     }
@@ -46,5 +44,9 @@ public class StockService {
         Stock stock = stockRepository.getReferenceById(id);
         stock.setDeleted(true);
         return stockMapper.toDto(stock);
+    }
+
+    public Stock getStockOfName(String name) {
+        return stockRepository.findByName(name);
     }
 }

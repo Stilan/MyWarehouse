@@ -7,10 +7,7 @@ import com.example.mywarehouse.entity.Product;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface ProductMapper {
-
-    ProductDto toDto(Product product);
-    Product toEntity(ProductDto productDto);
+public interface ProductMapper extends AbstractMapper<ProductDto, Product> {
 
     ProductDocDto toDocDto(Product product);
 

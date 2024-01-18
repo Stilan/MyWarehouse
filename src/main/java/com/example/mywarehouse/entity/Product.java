@@ -1,6 +1,9 @@
 package com.example.mywarehouse.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,18 +21,18 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id = UUID.randomUUID();
-    @Column(nullable = false)
+
     private Integer article;
-    @Column(nullable = false)
+
     private String name;
-    @Column(nullable = false)
+
     private Integer lastPurchasePrice;
-    @Column(nullable = false)
+
     private Integer lastSalePrice;
+
     private Integer remainingGoods;
-    @Column(nullable = false)
+
     private boolean isDeleted = Boolean.FALSE;
 
-
-
+    private UUID stockId;
 }

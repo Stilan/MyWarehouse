@@ -5,8 +5,7 @@ import com.example.mywarehouse.entity.Stock;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface StockMapper {
+public interface StockMapper extends AbstractMapper<StockDto, Stock> {
 
-    StockDto toDto(Stock stock);
-    Stock toEntity(StockDto stockDto);
+
 }

@@ -1,11 +1,18 @@
 package com.example.mywarehouse.controller;
 
 import com.example.mywarehouse.dto.ProductDto;
+import com.example.mywarehouse.mapper.ProductMapper;
 import com.example.mywarehouse.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
@@ -15,26 +22,23 @@ import java.util.UUID;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductMapper productMapper;
 
     @PostMapping("/create")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-        return new ResponseEntity<>(productService.createProduct(productDto), HttpStatus.OK);
+        ProductDto createProductDto = productService.create(productDto);
+        return new ResponseEntity<>(createProductDto, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable UUID id) {
-        ProductDto productDto = productService.getStockById(id);
+        ProductDto productDto = productMapper.toDto(productService.getProductById(id));
         return ResponseEntity.ok(productDto);
-    }
-
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID id, @RequestBody ProductDto productDto) {
-        return new ResponseEntity<>(productService.updateStock(id, productDto), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ProductDto> deleteProduct(@PathVariable UUID id) {
-        return new ResponseEntity<>(productService.deleteStock(id), HttpStatus.OK);
+        ProductDto deleteProductDto = productService.deleteStock(id);
+        return new ResponseEntity<>(deleteProductDto, HttpStatus.OK);
     }
 }

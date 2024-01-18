@@ -1,13 +1,11 @@
 package com.example.mywarehouse.mapper;
 
-import com.example.mywarehouse.dto.MovingDto;
-import com.example.mywarehouse.entity.Document;
+import com.example.mywarehouse.dto.MovingProductDto;
+import com.example.mywarehouse.entity.Product;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface MovingMapper {
+public interface MovingMapper extends AbstractMapper<MovingProductDto, Product> {
 
-    MovingDto toDto(Document document);
 
-    Document toEntity(MovingDto dto);
 }
