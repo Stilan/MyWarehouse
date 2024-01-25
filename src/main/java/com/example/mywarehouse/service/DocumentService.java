@@ -3,7 +3,9 @@ package com.example.mywarehouse.service;
 import com.example.mywarehouse.dto.EntranceProductDto;
 import com.example.mywarehouse.dto.LeftoversProductDto;
 import com.example.mywarehouse.dto.MovingProductDto;
+import com.example.mywarehouse.dto.MovingProductStockDto;
 import com.example.mywarehouse.dto.ProductDocDto;
+import com.example.mywarehouse.dto.ProductStockIdDto;
 import com.example.mywarehouse.dto.SaleProductDto;
 import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.entity.Stock;
@@ -25,27 +27,28 @@ public class DocumentService {
     private final StockService stockService;
     private final ProductMapper productMapper;
 
-    public List<EntranceProductDto> getEntrance(List<EntranceProductDto> entranceDto) {
-        return entranceDto.stream()
+    public List<ProductStockIdDto> getEntrance(List<EntranceProductDto> entranceDto) {
+        List<ProductStockIdDto> productStockIdDtos = entranceDto.stream()
                 .map(productService::createProduct)
                 .collect(Collectors.toList());
+        return productStockIdDtos;
     }
 
-    public List<MovingProductDto> getMoving(UUID id, List<MovingProductDto> movingProductDtoList) {
+    public List<MovingProductStockDto> getMoving(UUID id, List<MovingProductDto> movingProductDtoList) {
         return movingProductDtoList.stream()
                 .map(movingProductDto -> productService.moving(id, movingProductDto))
                 .collect(Collectors.toList());
     }
 
-    public List<SaleProductDto> getSale(UUID id, List<SaleProductDto> saleProductDtoList) {
+    public List<SaleProductDto> getSale(List<SaleProductDto> saleProductDtoList) {
          return saleProductDtoList.stream()
-                  .map(saleProductDto -> productService.saleProduct(id, saleProductDto))
+                  .map(productService::saleProduct)
                   .collect(Collectors.toList());
     }
 
     public List<ProductDocDto> getAllProduct(String name) {
         List<Product> products = productService.findAllByName(name);
-        if (name.length() == 0){
+        if (name.length() == 0) {
            products = productService.findAll();
         }
         return products.stream().map(productMapper :: toDocDto).collect(Collectors.toList());

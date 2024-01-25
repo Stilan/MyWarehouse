@@ -23,8 +23,8 @@ public class StockService {
 
     public StockDto createStock(StockDto stockDto) {
         Stock stock = stockMapper.toEntity(stockDto);
-        Stock savedStock = stockRepository.save(stock);
-        return stockMapper.toDto(savedStock);
+        Stock stock1 = stockRepository.save(stock);
+        return stockMapper.toDto(stock1);
     }
 
     public StockDto getStockById(UUID id) {
@@ -49,4 +49,6 @@ public class StockService {
     public Stock getStockOfName(String name) {
         return stockRepository.findByName(name);
     }
+
+
 }

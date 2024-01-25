@@ -2,12 +2,15 @@ package com.example.mywarehouse.service;
 
 import com.example.mywarehouse.dto.EntranceProductDto;
 import com.example.mywarehouse.dto.MovingProductDto;
+import com.example.mywarehouse.dto.MovingProductStockDto;
 import com.example.mywarehouse.dto.ProductDto;
+import com.example.mywarehouse.dto.ProductStockIdDto;
 import com.example.mywarehouse.dto.SaleProductDto;
 import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.mapper.EntranceMapper;
-import com.example.mywarehouse.mapper.MovingMapper;
+import com.example.mywarehouse.mapper.MovingProductStockMapper;
 import com.example.mywarehouse.mapper.ProductMapper;
+import com.example.mywarehouse.mapper.ProductStockIdMapper;
 import com.example.mywarehouse.mapper.SaleMapper;
 import com.example.mywarehouse.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,46 +28,43 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final EntranceMapper entranceMapper;
-    private final MovingMapper movingMapper;
+    private final StockService stockService;
     private final SaleMapper saleMapper;
     private final ProductMapper productMapper;
+    private final ProductStockIdMapper productStockIdMapper;
+    private final MovingProductStockMapper movingProductStockMapper;
 
-    public EntranceProductDto createProduct(EntranceProductDto productDto) {
+
+    public ProductStockIdDto createProduct(EntranceProductDto productDto) {
         Product product = entranceMapper.toEntity(productDto);
-        Product savedStock = productRepository.save(product);
-        return entranceMapper.toDto(savedStock);
+        productRepository.save(product);
+        return productStockIdMapper.toDto(product);
     }
 
     public ProductDto create(ProductDto productDto) {
         Product product = productMapper.toEntity(productDto);
-        Product savedStock = productRepository.save(product);
-        return productMapper.toDto(savedStock);
+        productRepository.save(product);
+        return productMapper.toDto(product);
     }
 
     public Product getProductById(UUID id) {
         return productRepository.findByIdAndIsDeletedFalse(id).orElseThrow();
     }
 
-    public MovingProductDto moving(UUID newStockId, MovingProductDto movingProductDto) {
+    public MovingProductStockDto moving(UUID newStockId, MovingProductDto movingProductDto) {
         Product product = productRepository.findByIdAndIsDeletedFalse(movingProductDto.getId()).orElseThrow();
-        product.setStockId(newStockId);
-        product.setRemainingGoods(movingProductDto.getRemainingGoods());
-        productRepository.save(product);
-        return movingMapper.toDto(product);
+        if (!product.getStockId().equals(newStockId) && stockService.getStockById(newStockId) != null) {
+            product.setStockId(newStockId);
+            product.setRemainingGoods(movingProductDto.getRemainingGoods());
+            productRepository.save(product);
+        }
+        return movingProductStockMapper.toDto(product);
     }
 
-    public SaleProductDto saleProduct(UUID stockId, SaleProductDto saleProductDto) {
-        List<Product> products = getAllProductOfStock(stockId);
+    public SaleProductDto saleProduct(SaleProductDto saleProductDto) {
         Product product = productRepository.findByIdAndIsDeletedFalse(saleProductDto.getId()).orElseThrow();
-        products.stream()
-                .filter(p -> p.getId().equals(product.getId()))
-                .findFirst()
-                .ifPresent(p -> {
-                    p.setRemainingGoods(p.getRemainingGoods() - saleProductDto.getRemainingGoods());
-                    p.setLastSalePrice(saleProductDto.getLastSalePrice());
-                    productRepository.save(p);
-                });
-
+        product.setLastSalePrice(saleProductDto.getLastSalePrice());
+        product.setRemainingGoods(product.getRemainingGoods() - saleProductDto.getRemainingGoods());
         return saleMapper.toDto(product);
     }
 

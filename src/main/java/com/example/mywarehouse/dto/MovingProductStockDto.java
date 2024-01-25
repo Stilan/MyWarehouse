@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class SaleProductDto {
+public class MovingProductStockDto {
 
     private UUID id;
 
@@ -13,10 +13,7 @@ public class SaleProductDto {
 
     private Integer article;
 
-    private Integer lastSalePrice;
-
-    private Integer remainingGoods;
-
     private UUID stockId;
 
+    private Integer remainingGoods;
 }

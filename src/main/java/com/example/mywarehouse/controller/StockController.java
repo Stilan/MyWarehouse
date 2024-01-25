@@ -26,7 +26,7 @@ public class StockController {
     @PostMapping("/create")
     public ResponseEntity<StockDto> createStock(@RequestBody StockDto stockDto) {
         StockDto createStockDto = stockService.createStock(stockDto);
-        return new ResponseEntity<>(createStockDto, HttpStatus.OK);
+        return new ResponseEntity<>(createStockDto, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
