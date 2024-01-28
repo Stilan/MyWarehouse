@@ -59,4 +59,6 @@ public class DocumentService {
         List<Product> products = productService.getAllProductOfStock(stock.getId());
         return products.stream().map(productMapper :: toLeftoversProduct).collect(Collectors.toList());
     }
+
+
 }
