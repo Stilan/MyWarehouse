@@ -31,7 +31,7 @@ public class StockController {
 
     @GetMapping("{id}")
     public ResponseEntity<StockDto> getStockById(@PathVariable  UUID id) {
-        StockDto stockDto = stockService.getStockById(id);
+        StockDto stockDto = stockService.getStockDtoById(id);
         return ResponseEntity.ok(stockDto);
     }
 

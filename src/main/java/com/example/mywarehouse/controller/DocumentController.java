@@ -8,7 +8,10 @@ import com.example.mywarehouse.dto.ProductDocDto;
 import com.example.mywarehouse.dto.ProductStockIdDto;
 import com.example.mywarehouse.dto.SaleProductDto;
 import com.example.mywarehouse.service.DocumentService;
-import com.example.mywarehouse.service.FileService;
+import com.example.mywarehouse.service.ProductFileService;
+import com.example.mywarehouse.service.StockFileService;
+import com.example.mywarehouse.utility.FileName;
+import com.example.mywarehouse.utility.StringHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -35,12 +38,14 @@ import java.util.UUID;
 public class DocumentController {
 
     private final DocumentService documentService;
-    private final FileService fileService;
+    private final ProductFileService productFileService;
+    private final StockFileService stockFileService;
 
 
     @PostMapping("/createEntrance")
     public ResponseEntity<List<ProductStockIdDto>> createEntrance(@RequestBody List<EntranceProductDto> entranceDto) {
         List<ProductStockIdDto> entranceProductDtoList = documentService.getEntrance(entranceDto);
+
         return new ResponseEntity<>(entranceProductDtoList, HttpStatus.CREATED);
     }
 
@@ -72,26 +77,18 @@ public class DocumentController {
 
     @GetMapping("/download")
     public ResponseEntity<Resource> getFileAllProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
-        String name = str.orElseGet(() -> "String is null");
-        String filename = "product.csv";
-        InputStreamResource file = new InputStreamResource(fileService.getAllCsvProduct(name));
-
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + FileName.getFileName(StringHelper.getString(str)) + ".csv")
                 .contentType(MediaType.parseMediaType("application/csv"))
-                .body(file);
+                .body(new InputStreamResource(productFileService.getCsvProduct(StringHelper.getString(str))));
     }
 
     @GetMapping("/downloadStockProduct")
     public ResponseEntity<Resource> getFileAllLeftoversProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
-        String name = str.orElseGet(() -> "String is null");
-        String filename = "product.csv";
-        InputStreamResource file = new InputStreamResource(fileService.getAllLeftoversCsvProduct(name));
-
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + FileName.getFileName(StringHelper.getString(str)) + ".csv")
                 .contentType(MediaType.parseMediaType("application/csv"))
-                .body(file);
+                .body(new InputStreamResource(stockFileService.getCsvProduct(StringHelper.getString(str))));
     }
 
 
