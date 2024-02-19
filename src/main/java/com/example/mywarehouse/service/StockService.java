@@ -4,7 +4,6 @@ import com.example.mywarehouse.dto.StockDto;
 import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.exception.ResourceNotFoundException;
 import com.example.mywarehouse.mapper.StockMapper;
-import com.example.mywarehouse.repository.ProductRepository;
 import com.example.mywarehouse.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,8 @@ import java.util.UUID;
 @Transactional
 public class StockService {
 
-    public final StockRepository stockRepository;
-    public final ProductRepository productRepository;
-    public final StockMapper stockMapper;
+    private final StockRepository stockRepository;
+    private final StockMapper stockMapper;
 
     public StockDto createStock(StockDto stockDto) {
         Stock stock = stockMapper.toEntity(stockDto);
