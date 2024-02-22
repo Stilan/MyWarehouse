@@ -7,6 +7,7 @@ import com.example.mywarehouse.dto.ProductDto;
 import com.example.mywarehouse.dto.ProductStockIdDto;
 import com.example.mywarehouse.dto.SaleProductDto;
 import com.example.mywarehouse.entity.Product;
+import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.mapper.EntranceMapper;
 import com.example.mywarehouse.mapper.MovingProductStockMapper;
 import com.example.mywarehouse.mapper.ProductMapper;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -81,12 +83,18 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public List<Product> findAllByName(String name) {
+    public List<Product> getFindAllByName(String name) {
         return productRepository.findAllByName(name);
     }
 
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    public List<Product> getAllLeftoversProduct(String name) {
+        Stock stock = stockService.getStockOfName(name);
+        List<Product> products = getAllProductOfStock(stock.getId());
+        return new ArrayList<>(products);
     }
 }
 

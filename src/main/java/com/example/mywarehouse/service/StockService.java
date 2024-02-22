@@ -2,6 +2,7 @@ package com.example.mywarehouse.service;
 
 import com.example.mywarehouse.dto.StockDto;
 import com.example.mywarehouse.entity.Stock;
+import com.example.mywarehouse.exception.ResourceNotFoundException;
 import com.example.mywarehouse.mapper.StockMapper;
 import com.example.mywarehouse.repository.ProductRepository;
 import com.example.mywarehouse.repository.StockRepository;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
-
 
 @Service
 @RequiredArgsConstructor
@@ -51,7 +51,8 @@ public class StockService {
     }
 
     public Stock getStockById(UUID id) {
-        Stock stock = stockRepository.findByIdAndIsDeletedFalse(id).orElseThrow();
+        Stock stock = stockRepository.findByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Stock not found"));
         return stock;
     }
 }

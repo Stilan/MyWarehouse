@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -49,7 +50,7 @@ public class DocumentService {
     }
 
     public List<ProductDocDto> getAllProduct(String name) {
-        List<Product> products = productService.findAllByName(name);
+        List<Product> products = productService.getFindAllByName(name);
         if (name.length() == 0) {
            products = productService.findAll();
         }
@@ -59,8 +60,7 @@ public class DocumentService {
     public List<LeftoversProductDto> getAllLeftoversProduct(String name) {
         Stock stock = stockService.getStockOfName(name);
         List<Product> products = productService.getAllProductOfStock(stock.getId());
-        return products.stream().map(productMapper :: toLeftoversProduct).collect(Collectors.toList());
+        return new ArrayList<>(products.stream().map(productMapper::toLeftoversProduct).collect(Collectors.toList()));
     }
-
 
 }
