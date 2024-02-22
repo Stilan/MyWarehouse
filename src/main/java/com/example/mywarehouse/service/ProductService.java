@@ -34,10 +34,10 @@ public class ProductService {
     private final ProductStockIdMapper productStockIdMapper;
     private final MovingProductStockMapper movingProductStockMapper;
 
-
     public ProductStockIdDto createProduct(EntranceProductDto productDto) {
         Product product = entranceMapper.toEntity(productDto);
         productRepository.save(product);
+        productStockIdMapper.toDto(product);
         return productStockIdMapper.toDto(product);
     }
 
@@ -53,7 +53,7 @@ public class ProductService {
 
     public MovingProductStockDto moving(UUID newStockId, MovingProductDto movingProductDto) {
         Product product = productRepository.findByIdAndIsDeletedFalse(movingProductDto.getId()).orElseThrow();
-        if (!product.getStockId().equals(newStockId) && stockService.getStockById(newStockId) != null) {
+        if (!product.getStockId().equals(newStockId) && stockService.getStockDtoById(newStockId) != null) {
             product.setStockId(newStockId);
             product.setRemainingGoods(movingProductDto.getRemainingGoods());
             productRepository.save(product);

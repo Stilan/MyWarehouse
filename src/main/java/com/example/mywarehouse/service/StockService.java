@@ -27,7 +27,7 @@ public class StockService {
         return stockMapper.toDto(stock1);
     }
 
-    public StockDto getStockById(UUID id) {
+    public StockDto getStockDtoById(UUID id) {
         Stock stock = stockRepository.findByIdAndIsDeletedFalse(id).orElseThrow();
         return stockMapper.toDto(stock);
     }
@@ -50,5 +50,8 @@ public class StockService {
         return stockRepository.findByName(name);
     }
 
-
+    public Stock getStockById(UUID id) {
+        Stock stock = stockRepository.findByIdAndIsDeletedFalse(id).orElseThrow();
+        return stock;
+    }
 }

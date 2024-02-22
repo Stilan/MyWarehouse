@@ -26,10 +26,12 @@ public class DocumentService {
     private final ProductService productService;
     private final StockService stockService;
     private final ProductMapper productMapper;
+    private final StockProductQuantityService stockProductQuantityService;
 
     public List<ProductStockIdDto> getEntrance(List<EntranceProductDto> entranceDto) {
         List<ProductStockIdDto> productStockIdDtos = entranceDto.stream()
                 .map(productService::createProduct)
+                .map(stockProductQuantityService::createStockProduct)
                 .collect(Collectors.toList());
         return productStockIdDtos;
     }
