@@ -18,8 +18,8 @@ public class StockProductQuantityService {
 
     public ProductStockIdDto createStockProduct(ProductStockIdDto productDto) {
         StockProductQuantity stockProductQuantity = new StockProductQuantity();
-        stockProductQuantity.setStock(stockService.getStockById(productDto.getStockId()));
-        stockProductQuantity.setProduct(productService.getProductById(productDto.getId()));
+        stockProductQuantity.setStockId(stockService.getStockById(productDto.getStockId()));
+        stockProductQuantity.setProductId(productService.getProductById(productDto.getId()));
         stockProductQuantity.setQuantity(productDto.getRemainingGoods());
         stockProductQuantityRepository.save(stockProductQuantity);
         return productDto;

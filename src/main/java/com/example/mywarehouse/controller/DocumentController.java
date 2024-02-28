@@ -75,10 +75,10 @@ public class DocumentController {
         return exportServiceImp.getFile(StringHelper.getString(str));
     }
 
-//    @GetMapping("/downloadStockProduct")
-//    public ResponseEntity<Resource> getFileAllLeftoversProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
-//        return exportServiceImp.getFile(StringHelper.getString(str));
-//    }
+    @GetMapping("/downloadStockProduct")
+    public ResponseEntity<Resource> getFileAllLeftoversProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
+        return exportServiceImp.getFile(StringHelper.getString(str));
+    }
 
 
 }
