@@ -7,6 +7,7 @@ import com.example.mywarehouse.dto.MovingProductStockDto;
 import com.example.mywarehouse.dto.ProductDocDto;
 import com.example.mywarehouse.dto.ProductStockIdDto;
 import com.example.mywarehouse.dto.SaleProductDto;
+import com.example.mywarehouse.enums.FileType;
 import com.example.mywarehouse.service.DocumentService;
 import com.example.mywarehouse.service.ExportServiceImp;
 import com.example.mywarehouse.utility.StringHelper;
@@ -70,14 +71,16 @@ public class DocumentController {
         return new ResponseEntity<>(leftoversProductDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/download")
-    public ResponseEntity<Resource> getFileAllProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
-        return exportServiceImp.getFile(StringHelper.getString(str));
+    @GetMapping("/download/{type}")
+    public ResponseEntity<Resource> getFileAllProduct(@RequestParam(value = "name", required = false) Optional<String> str,
+                                                      @PathVariable("type") FileType type) {
+        return exportServiceImp.getFile(StringHelper.getString(str), type);
     }
 
-    @GetMapping("/downloadStockProduct")
-    public ResponseEntity<Resource> getFileAllLeftoversProduct(@RequestParam(value = "name", required = false) Optional<String> str) {
-        return exportServiceImp.getFile(StringHelper.getString(str));
+    @GetMapping("/downloadStockProduct/{type}")
+    public ResponseEntity<Resource> getFileAllLeftoversProduct(@RequestParam(value = "name", required = false) Optional<String> str,
+                                                               @PathVariable("type") FileType type) {
+        return exportServiceImp.getFile(StringHelper.getString(str), type);
     }
 
 

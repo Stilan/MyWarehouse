@@ -1,6 +1,7 @@
 package com.example.mywarehouse.service.file;
 
 import com.example.mywarehouse.entity.Product;
+import com.example.mywarehouse.enums.FileType;
 import com.example.mywarehouse.utility.FileName;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -60,5 +61,10 @@ public class CsvFileService implements FileService {
                 .header(HttpHeaders.CONTENT_DISPOSITION, SAVE_AS + str + FILE_TYPE)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(inputStreamResource);
+    }
+
+    @Override
+    public FileType type() {
+        return FileType.CSV;
     }
 }
