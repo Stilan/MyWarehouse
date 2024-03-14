@@ -10,6 +10,6 @@ public class StringHelper {
     }
 
     public static String getString(Optional<String> str) {
-        return str.orElseGet(() -> STR);
+        return str.orElse(STR);
     }
 }
