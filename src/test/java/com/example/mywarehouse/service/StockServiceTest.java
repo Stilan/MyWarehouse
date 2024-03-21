@@ -32,25 +32,27 @@ class StockServiceTest {
     @Test
     void createStock() {
         StockDto stockDto = new StockDto();
-        stockDto.setName("111");
+        stockDto.setName("Milk");
         Stock stock = new Stock();
-        stock.setName("111");
+        stock.setName("Test");
         Mockito.when(stockRepository.save(any())).thenReturn(stock).getMock();
         Mockito.when(stockMapper.toEntity(stockDto)).thenReturn(stock).getMock();
-        Mockito.when(stockMapper.toDto(stock)).thenReturn(stockDto);
-        StockDto dto = stockService.createStock(stockDto);
-        assertThat(dto).isNotNull();
+        Stock result = stockService.createStock(stockDto);
+        assertThat(result).isNotNull();
     }
 
     @Test
     void getStockDtoById() {
+        StockDto stockDto = new StockDto();
+        stockDto.setName("111");
         Stock stock = new Stock();
         stock.setId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c34"));
         stock.setName("111");
         Mockito.when(stockRepository.findByIdAndIsDeletedFalse(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c34")))
                 .thenReturn(Optional.of(stock));
+        Mockito.when(stockMapper.toDto(stock)).thenReturn(stockDto);
         StockDto dto = stockService.getStockDtoById(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c34"));
-        assertEquals("111", stock.getName());
+        assertEquals("111", dto.getName());
     }
 
     @Test
@@ -58,13 +60,13 @@ class StockServiceTest {
         StockDto stockDto = new StockDto();
         stockDto.setName("111");
         Stock stock = new Stock();
-        stock.setName("111");
-        Mockito.when(stockMapper.toEntity(stockDto)).thenReturn(stock).getMock();
-        stockDto.setName("222");
-        Mockito.when(stockRepository.save(any())).thenReturn(stock).getMock();
+        stock.setId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
+        stock.setName("222");
+        Mockito.when(stockMapper.toEntity(stockDto)).thenReturn(stock);
+        Mockito.when(stockRepository.save(any())).thenReturn(stock);
         Mockito.when(stockMapper.toDto(stock)).thenReturn(stockDto);
-        StockDto dto = stockService.createStock(stockDto);
-        assertEquals("222", dto.getName());
+        StockDto dto = stockService.updateStock(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"),stockDto);
+        assertEquals("111", dto.getName());
     }
 
     @Test

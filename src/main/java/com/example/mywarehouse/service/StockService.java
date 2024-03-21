@@ -19,10 +19,9 @@ public class StockService {
     private final StockRepository stockRepository;
     private final StockMapper stockMapper;
 
-    public StockDto createStock(StockDto stockDto) {
+    public Stock createStock(StockDto stockDto) {
         Stock stock = stockMapper.toEntity(stockDto);
-        Stock stock1 = stockRepository.save(stock);
-        return stockMapper.toDto(stock1);
+        return stockRepository.save(stock);
     }
 
     public StockDto getStockDtoById(UUID id) {
