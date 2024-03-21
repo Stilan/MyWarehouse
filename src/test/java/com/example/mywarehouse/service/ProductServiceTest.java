@@ -1,11 +1,6 @@
 package com.example.mywarehouse.service;
 
-import com.example.mywarehouse.dto.EntranceProductDto;
-import com.example.mywarehouse.dto.MovingProductDto;
-import com.example.mywarehouse.dto.MovingProductStockDto;
-import com.example.mywarehouse.dto.ProductDto;
-import com.example.mywarehouse.dto.ProductStockIdDto;
-import com.example.mywarehouse.dto.SaleProductDto;
+import com.example.mywarehouse.dto.*;
 import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.mapper.EntranceMapper;
 import com.example.mywarehouse.mapper.MovingProductStockMapper;
@@ -52,6 +47,9 @@ class ProductServiceTest {
 
     @Mock
     private MovingProductStockMapper movingProductStockMapper;
+
+    @Mock
+    private StockService stockService;
 
     @Test
     void createProduct() {
@@ -104,34 +102,6 @@ class ProductServiceTest {
     }
 
 
-
-    @Test
-    void moving() {
-        MovingProductDto movingProductDto = new MovingProductDto();
-        movingProductDto.setId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
-        movingProductDto.setName("Name");
-        movingProductDto.setArticle(12);
-        movingProductDto.setRemainingGoods(23);
-        Product product = new Product();
-        product.setId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
-        product.setName("Name");
-        product.setStockId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c23"));
-        MovingProductStockDto movingProductStockDto = new MovingProductStockDto();
-        movingProductStockDto.setId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
-        movingProductStockDto.setName("Name");
-        movingProductStockDto.setArticle(12);
-        movingProductStockDto.setRemainingGoods(23);
-        movingProductStockDto.setStockId(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c23"));
-        Mockito.when(productRepository
-                        .findByIdAndIsDeletedFalse(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12")))
-                        .thenReturn(java.util.Optional.of(product));
-        Mockito.when(movingProductStockMapper.toDto(product)).thenReturn(movingProductStockDto);
-        MovingProductStockDto result = productService.moving(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c23"),
-                movingProductDto);
-        assertEquals("Name", result.getName());
-
-    }
-
     @Test
     void saleProduct() {
         SaleProductDto saleProductDto = new SaleProductDto();
@@ -164,7 +134,7 @@ class ProductServiceTest {
                 .getReferenceById(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12")))
                 .thenReturn(product);
         Mockito.when(productMapper.toDto(product)).thenReturn(productDto);
-        ProductDto result = productService.deleteStock(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
+        ProductDto result = productService.deleteProduct(UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c12"));
         assertEquals("Name", result.getName());
     }
 

@@ -11,12 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +34,16 @@ public class HtmlFileService implements FileService {
     public static ByteArrayInputStream getByteArrayInputStream(List<Product> products) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try (PrintWriter printWriter = new PrintWriter(out,true, StandardCharsets.UTF_8)) {
+            Properties property = new Properties();
+            FileInputStream fis = new FileInputStream("src/main/resources/db/html.properties");
             for (Product product : products) {
-                printWriter.write("<html>\n" + "<header></header>\n"
-                        + "<body>\n" + "<table>\n"
-                        + "<tr>" + "<th>" + ARTICLE + "</th>" + "<th>" + NAME + "</th>" + "<th>" + REMAINDER + "</th>" + "</tr>"
-                        + "<tr>" + "<td>" + product.getArticle() + "</td>" + "<td>" + product.getName() + "</td>" + "<td>" + product.getRemainingGoods() + "</td>" + "</tr>\n"
-                        + "<table>\n" + "</body>\n" + "</html>");
+                printWriter.write( property.getProperty("test.1") + property.getProperty("test.2")
+                        + property.getProperty("test.3") + ARTICLE + property.getProperty("test.4") + NAME + property.getProperty("test.4") + REMAINDER + property.getProperty("test.5")
+                        + property.getProperty("test.6") + product.getArticle() + property.getProperty("test.7") + product.getName() + property.getProperty("test.7") + product.getRemainingGoods() + property.getProperty("test.8")
+                        + property.getProperty("test.9"));
+                        ;
             }
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | FileNotFoundException e) {
             throw new RuntimeException(EXCEPTION + e.getMessage());
         }
         return new ByteArrayInputStream(out.toByteArray());

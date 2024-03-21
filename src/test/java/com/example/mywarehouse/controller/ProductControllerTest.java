@@ -88,7 +88,7 @@ class ProductControllerTest {
         productDto.setLastSalePrice(34);
         productDto.setLastPurchasePrice(45);
         productDto.setRemainingGoods(32);
-        when(productService.deleteStock(any())).thenReturn(productDto);
+        when(productService.deleteProduct(any())).thenReturn(productDto);
         mvc.perform(delete(URL + "/delete/" + UUID.fromString("db9d6441-c3f2-4d8d-83fb-c07298610c23")))
                 .andExpect(status().isOk());
 

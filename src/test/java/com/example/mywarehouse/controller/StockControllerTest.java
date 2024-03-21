@@ -1,6 +1,7 @@
 package com.example.mywarehouse.controller;
 
 import com.example.mywarehouse.dto.StockDto;
+import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.service.StockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,12 @@ class StockControllerTest {
 
     @Test
     void createStock() throws Exception {
-        StockDto stockDto = new StockDto();
-        stockDto.setName("Name");
-        when(stockService.createStock(any())).thenReturn(stockDto);
+        Stock stock = new Stock();
+        stock.setName("Name");
+        when(stockService.createStock(any())).thenReturn(stock);
         mvc.perform(post(URL + "/create")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("""   
+                        .content("""
                                {
                                     "name": "Name"
                                 }

@@ -12,5 +12,7 @@ public class MovingProductDto {
 
     private Integer article;
 
+    private UUID stockId;
+
     private Integer remainingGoods;
 }

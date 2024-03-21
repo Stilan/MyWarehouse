@@ -1,6 +1,7 @@
 package com.example.mywarehouse.controller;
 
 import com.example.mywarehouse.dto.StockDto;
+import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,9 @@ public class StockController {
     private final StockService stockService;
 
     @PostMapping("/create")
-    public ResponseEntity<StockDto> createStock(@RequestBody StockDto stockDto) {
-        StockDto createStockDto = stockService.createStock(stockDto);
-        return new ResponseEntity<>(createStockDto, HttpStatus.CREATED);
+    public ResponseEntity<Stock> createStock(@RequestBody StockDto stockDto) {
+        Stock createStock = stockService.createStock(stockDto);
+        return new ResponseEntity<>(createStock, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")

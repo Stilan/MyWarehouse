@@ -32,22 +32,22 @@ class StockProductQuantityServiceTest {
     @Test
     void createStockProduct() {
         Stock stock = new Stock();
-        stock.setName("111");
+        stock.setName("Name");
         Product product = new Product();
-        product.setName("Name");
+        product.setName("Milk");
         StockProductQuantity stockProductQuantity = new StockProductQuantity();
         stockProductQuantity.setQuantity(12);
         stockProductQuantity.setStockId(stock);
         stockProductQuantity.setProductId(product);
         ProductStockIdDto productDocDto = new ProductStockIdDto();
-        productDocDto.setName("Name");
+        productDocDto.setName("Milk");
         productDocDto.setArticle(123);
         productDocDto.setLastPurchasePrice(12);
         Mockito.when(stockService.getStockById(productDocDto.getStockId())).thenReturn(stock);
         Mockito.when(productService.getProductById(productDocDto.getId())).thenReturn(product);
         Mockito.when(stockProductQuantityRepository.save(any())).thenReturn(stockProductQuantity);
         ProductStockIdDto result = stockProductQuantityService.createStockProduct(productDocDto);
-        assertEquals("Name" , result.getName());
+        assertEquals("Milk" , result.getName());
 
     }
 

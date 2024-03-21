@@ -68,7 +68,7 @@ public class ProductService {
         return saleMapper.toDto(product);
     }
 
-    public ProductDto deleteStock(UUID id) {
+    public ProductDto deleteProduct(UUID id) {
         Product product = productRepository.getReferenceById(id);
         product.setDeleted(true);
         return productMapper.toDto(product);
