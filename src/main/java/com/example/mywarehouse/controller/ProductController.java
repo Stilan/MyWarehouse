@@ -21,6 +21,7 @@ import java.util.UUID;
 @RequestMapping("api/product")
 public class ProductController {
 
+
     private final ProductService productService;
     private final ProductMapper productMapper;
 
@@ -41,4 +42,8 @@ public class ProductController {
         ProductDto deleteProductDto = productService.deleteProduct(id);
         return new ResponseEntity<>(deleteProductDto, HttpStatus.OK);
     }
+
+    /**
+     * Добавить метод update
+     */
 }

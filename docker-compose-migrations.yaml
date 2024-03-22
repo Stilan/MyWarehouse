@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  migrations:
+    container_name: migrations
+    image: liquibase/liquibase:4.23.2
+    restart: no
+    environment:
+      INSTALL_POSTGRES: true
+    volumes:
+      - ./src/main/resources/liquibase.properties:/liquibase/src/main/resources/liquibase.properties
+      - ./src/main/resources/liquibase:/liquibase/src/main/resources/liquibase:ro
+    command:
+      --driver=org.postgresql.Driver
+      --defaults-file=src/main/resources/liquibase.properties update

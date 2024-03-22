@@ -4,6 +4,7 @@ import com.example.mywarehouse.dto.*;
 import com.example.mywarehouse.entity.Product;
 import com.example.mywarehouse.entity.Stock;
 import com.example.mywarehouse.mapper.MovingMapper;
+import com.example.mywarehouse.mapper.ProductStockIdMapper;
 import com.example.mywarehouse.service.ProductService;
 import com.example.mywarehouse.service.StockService;
 import org.junit.jupiter.api.AfterEach;
@@ -25,10 +26,12 @@ class MyWarehouseApplicationTests {
     private StockService stockService;
     @Autowired
     private MovingMapper movingMapper;
+    @Autowired
+    private ProductStockIdMapper productStockIdMapper;
 
     private UUID stockId1;
     private UUID stockId2;
-    private UUID productId;
+    private ProductStockIdDto productStockIdDto;
 
     @BeforeEach
     void before() {
@@ -46,13 +49,13 @@ class MyWarehouseApplicationTests {
         entranceProductDto.setLastPurchasePrice(23);
         entranceProductDto.setRemainingGoods(12);
         entranceProductDto.setStockId(stockId1);
-        ProductStockIdDto productStockIdDto = productService.createProduct(entranceProductDto);
-        productId = productStockIdDto.getId();
+        productStockIdDto = productService.createProduct(entranceProductDto);
+
     }
 
     @Test
     void contextLoads() {
-        Product product = productService.getProductById(productId);
+        Product product = productStockIdMapper.toEntity(productStockIdDto);
         MovingProductDto movingProductDto = movingMapper.toDto(product);
         MovingProductStockDto movingProductStockDto = productService.moving(stockId2,movingProductDto);
         assertEquals(stockId2, movingProductStockDto.getStockId());
@@ -61,7 +64,7 @@ class MyWarehouseApplicationTests {
 
     @AfterEach
     void after() {
-        productService.deleteProduct(productId);
+        productService.deleteProduct(productStockIdDto.getId());
         stockService.deleteStock(stockId1);
         stockService.deleteStock(stockId2);
     }

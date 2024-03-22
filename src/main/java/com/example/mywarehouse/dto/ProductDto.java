@@ -6,7 +6,7 @@ import lombok.Data;
 public class ProductDto {
 
     private Integer article;
-
+    
     private String name;
 
     private Integer lastPurchasePrice;
